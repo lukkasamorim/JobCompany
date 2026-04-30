@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Company — Assessoria em Marketing Personalizado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --gray-light: #e8e6e0;
+    --gray-mid: #b0ada5;
+    --gray-dark: #3a3835;
+    --accent: #c8c0b0;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-italic: 'Playfair Display', serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--black);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: multiply;
+  }
+  .cursor.hover { width: 40px; height: 40px; background: rgba(10,10,10,0.15); }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1px solid var(--black);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    mix-blend-mode: multiply;
+    transition: background 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(245,244,240,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--gray-light);
+    mix-blend-mode: normal;
+  }
+  .logo {
+    display: flex; flex-direction: column; line-height: 1;
+    text-decoration: none;
+  }
+  .logo-job {
+    font-family: var(--font-display);
+    font-size: 2rem; letter-spacing: 0.12em;
+    color: var(--black);
+  }
+  .logo-company {
+    font-family: var(--font-body);
+    font-size: 0.6rem; font-weight: 400;
+    letter-spacing: 0.45em; text-transform: uppercase;
+    color: var(--gray-dark);
+    margin-top: -2px;
+  }
+  .nav-links {
+    display: flex; gap: 3rem; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.75rem; font-weight: 400; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--black);
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0; right: 100%;
+    height: 0.5px; background: var(--black);
+    transition: right 0.35s ease;
+  }
+  .nav-links a:hover::after { right: 0; }
+  .nav-cta {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.6rem 1.6rem;
+    border: 0.5px solid var(--black);
+    background: transparent; color: var(--black);
+    cursor: none; text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  .nav-cta:hover { background: var(--black); color: var(--white); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--black);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.04) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.04) 60px);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-tag::before { content: ''; width: 2rem; height: 0.5px; background: var(--gray-mid); }
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.92; letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 2rem;
+  }
+  .hero-h1 em {
+    font-family: var(--font-italic);
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 0.85rem; font-weight: 300; line-height: 1.8;
+    color: var(--gray-mid); max-width: 36ch;
+    margin-bottom: 3rem;
+  }
+  .hero-btn {
+    display: inline-flex; align-items: center; gap: 1rem;
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--white); text-decoration: none;
+    border-bottom: 0.5px solid rgba(255,255,255,0.3);
+    padding-bottom: 0.4rem;
+    transition: border-color 0.3s, gap 0.3s;
+  }
+  .hero-btn:hover { border-color: var(--white); gap: 1.5rem; }
+  .hero-btn-arrow {
+    width: 32px; height: 32px; border: 0.5px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .hero-right {
+    background: var(--white);
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+  .hero-stats {
+    display: flex; flex-direction: column; gap: 2.5rem;
+    margin-top: auto; padding-top: 4rem;
+  }
+  .stat-item { border-top: 0.5px solid var(--gray-light); padding-top: 1.5rem; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem; line-height: 1; letter-spacing: 0.05em;
+    color: var(--black);
+  }
+  .stat-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gray-mid); margin-top: 0.3rem;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 3rem; right: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gray-mid); writing-mode: vertical-rl;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 0.5px; height: 60px; background: var(--gray-mid);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.3); opacity: 0.3; }
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--black);
+    padding: 1.2rem 0;
+    overflow: hidden;
+    border-top: 0.5px solid var(--gray-dark);
+    border-bottom: 0.5px solid var(--gray-dark);
+  }
+  .marquee-track {
+    display: flex; gap: 4rem;
+    animation: marquee 18s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    display: flex; align-items: center; gap: 4rem;
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gray-mid); white-space: nowrap;
+  }
+  .marquee-dot { width: 4px; height: 4px; background: var(--gray-mid); border-radius: 50%; }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SOBRE */
+  .sobre {
+    display: grid; grid-template-columns: 5fr 7fr;
+    min-height: 80vh;
+  }
+  .sobre-left {
+    background: var(--gray-light);
+    padding: 7rem 4rem;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .sobre-num {
+    font-family: var(--font-display);
+    font-size: 12rem; line-height: 1; letter-spacing: -0.02em;
+    color: rgba(10,10,10,0.06);
+    position: absolute; bottom: 2rem; left: 3rem;
+    pointer-events: none;
+  }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gray-mid);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content: ''; width: 1.5rem; height: 0.5px; background: var(--gray-mid); }
+  .sobre-right {
+    padding: 7rem 5rem 7rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .sobre-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    line-height: 1; letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+  }
+  .sobre-h2 em {
+    font-family: var(--font-italic);
+    font-style: italic; font-size: 0.85em;
+    color: var(--gray-dark);
+  }
+  .sobre-p {
+    font-size: 1rem; font-weight: 300; line-height: 1.9;
+    color: var(--gray-dark); max-width: 52ch;
+    margin-bottom: 1.5rem;
+  }
+  .sobre-list {
+    list-style: none;
+    margin-top: 2rem;
+    display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .sobre-list li {
+    font-size: 0.8rem; letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 1rem;
+    color: var(--black);
+  }
+  .sobre-list li::before {
+    content: ''; width: 24px; height: 0.5px;
+    background: var(--black); flex-shrink: 0;
+  }
+
+  /* SERVICOS */
+  .servicos { padding: 8rem 4rem; background: var(--white); }
+  .servicos-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 5rem;
+    border-bottom: 0.5px solid var(--gray-light);
+    padding-bottom: 2rem;
+  }
+  .servicos-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    letter-spacing: 0.04em; line-height: 1;
+  }
+  .servicos-sub {
+    font-size: 0.8rem; font-weight: 300; line-height: 1.8;
+    color: var(--gray-mid); max-width: 32ch; text-align: right;
+  }
+  .servicos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 0.5px solid var(--gray-light);
+  }
+  .servico-card {
+    padding: 3rem 2.5rem;
+    border-right: 0.5px solid var(--gray-light);
+    border-bottom: 0.5px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: none;
+  }
+  .servico-card:nth-child(3n) { border-right: none; }
+  .servico-card:nth-last-child(-n+3) { border-bottom: none; }
+  .servico-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 100%;
+    height: 2px; background: var(--black);
+    transition: right 0.5s ease;
+  }
+  .servico-card:hover::before { right: 0; }
+  .servico-card:hover { background: var(--gray-light); }
+  .servico-num {
+    font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.1em;
+    color: var(--gray-mid); margin-bottom: 2.5rem;
+  }
+  .servico-icon {
+    width: 36px; height: 36px; margin-bottom: 1.5rem;
+    opacity: 0.6;
+  }
+  .servico-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem; letter-spacing: 0.06em; line-height: 1.1;
+    margin-bottom: 1rem; color: var(--black);
+  }
+  .servico-desc {
+    font-size: 0.8rem; font-weight: 300; line-height: 1.8;
+    color: var(--gray-dark);
+  }
+
+  /* METODOLOGIA */
+  .metodologia {
+    background: var(--black);
+    padding: 8rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .metodologia::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle at 80% 20%, rgba(200,192,176,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 20% 80%, rgba(200,192,176,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .met-header { margin-bottom: 5rem; }
+  .met-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    line-height: 1; letter-spacing: 0.04em;
+    color: var(--white); margin-top: 1.5rem;
+  }
+  .met-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+  }
+  .met-step {
+    padding: 3rem 2rem 3rem 0;
+    border-right: 0.5px solid rgba(255,255,255,0.08);
+    padding-right: 2rem; padding-left: 2rem;
+  }
+  .met-step:first-child { padding-left: 0; }
+  .met-step:last-child { border-right: none; }
+  .met-step-num {
+    font-family: var(--font-display); font-size: 4rem; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.08); line-height: 1; margin-bottom: 1.5rem;
+  }
+  .met-step-title {
+    font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.08em;
+    color: var(--white); margin-bottom: 1rem; line-height: 1;
+  }
+  .met-step-desc {
+    font-size: 0.78rem; font-weight: 300; line-height: 1.8;
+    color: var(--gray-mid);
+  }
+
+  /* CASES */
+  .cases { padding: 8rem 4rem; }
+  .cases-header { margin-bottom: 4rem; }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    grid-template-rows: auto auto;
+    gap: 1px;
+    background: var(--gray-light);
+  }
+  .case-item {
+    background: var(--white);
+    padding: 3.5rem 3rem;
+    position: relative; overflow: hidden;
+    cursor: none;
+  }
+  .case-item.featured { grid-row: 1 / 3; }
+  .case-cover {
+    width: 100%; aspect-ratio: 16/10;
+    background: var(--black);
+    margin-bottom: 2rem; overflow: hidden;
+    position: relative;
+  }
+  .case-cover-pattern {
+    width: 100%; height: 100%;
+    opacity: 0.4;
+  }
+  .case-tag {
+    font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 1rem;
+  }
+  .case-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem; letter-spacing: 0.04em; line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+  .case-desc {
+    font-size: 0.78rem; font-weight: 300; line-height: 1.7;
+    color: var(--gray-dark);
+  }
+  .case-arrow {
+    position: absolute; top: 3rem; right: 3rem;
+    width: 40px; height: 40px; border: 0.5px solid var(--gray-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: background 0.3s, border-color 0.3s;
+  }
+  .case-item:hover .case-arrow { background: var(--black); border-color: var(--black); color: var(--white); }
+
+  /* DEPOIMENTOS */
+  .depoimentos {
+    background: var(--gray-light);
+    padding: 8rem 4rem;
+  }
+  .dep-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    margin-top: 4rem;
+  }
+  .dep-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border: 0.5px solid rgba(10,10,10,0.06);
+    position: relative;
+  }
+  .dep-quote {
+    font-family: var(--font-italic);
+    font-style: italic; font-size: 1.05rem; line-height: 1.8;
+    color: var(--black); margin-bottom: 2rem;
+  }
+  .dep-quote::before {
+    content: '"';
+    font-family: var(--font-display); font-size: 5rem; line-height: 0.7;
+    color: var(--gray-light); float: left; margin-right: 0.5rem;
+  }
+  .dep-author {
+    display: flex; align-items: center; gap: 1rem;
+    border-top: 0.5px solid var(--gray-light); padding-top: 1.5rem;
+  }
+  .dep-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--black); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; color: var(--white); letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .dep-name {
+    font-size: 0.78rem; font-weight: 500; color: var(--black);
+  }
+  .dep-role {
+    font-size: 0.68rem; color: var(--gray-mid); letter-spacing: 0.1em;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--black); color: var(--white);
+    padding: 10rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'JOB';
+    font-family: var(--font-display); font-size: 28vw; line-height: 1;
+    color: rgba(255,255,255,0.025);
+    position: absolute; right: -2vw; bottom: -2rem;
+    pointer-events: none; letter-spacing: -0.02em;
+  }
+  .cta-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5rem); line-height: 0.95; letter-spacing: 0.04em;
+    color: var(--white);
+  }
+  .cta-h2 em {
+    font-family: var(--font-italic); font-style: italic;
+    font-size: 0.85em; color: var(--accent);
+  }
+  .cta-right { display: flex; flex-direction: column; gap: 2rem; }
+  .cta-p {
+    font-size: 0.9rem; font-weight: 300; line-height: 1.9; color: var(--gray-mid);
+  }
+  .cta-form { display: flex; flex-direction: column; gap: 0; }
+  .cta-form input {
+    background: transparent;
+    border: none; border-bottom: 0.5px solid rgba(255,255,255,0.2);
+    padding: 1rem 0; color: var(--white);
+    font-family: var(--font-body); font-size: 0.85rem; font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+  .cta-form input:focus { border-bottom-color: var(--white); }
+  .cta-submit {
+    margin-top: 2.5rem;
+    background: var(--white); color: var(--black);
+    border: none; padding: 1.1rem 2.5rem;
+    font-family: var(--font-body); font-size: 0.7rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    cursor: none; align-self: flex-start;
+    transition: background 0.3s, color 0.3s;
+  }
+  .cta-submit:hover { background: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); color: var(--white);
+    padding: 4rem;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+  }
+  .footer-brand .logo-job { font-size: 1.6rem; color: var(--white); }
+  .footer-brand .logo-company { color: var(--gray-mid); }
+  .footer-tagline {
+    font-size: 0.75rem; font-weight: 300; line-height: 1.8;
+    color: var(--gray-mid); margin-top: 1.5rem; max-width: 28ch;
+  }
+  .footer-col h4 {
+    font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gray-mid); margin-bottom: 1.5rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-col ul a {
+    text-decoration: none; font-size: 0.8rem; font-weight: 300;
+    color: rgba(255,255,255,0.6); transition: color 0.3s;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+  .footer-bottom {
+    background: var(--black);
+    padding: 1.5rem 4rem;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.65rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* HERO ANIMATE */
+  .hero-tag, .hero-h1, .hero-sub, .hero-btn { opacity: 0; }
+  .hero-tag { animation: fadeUp 0.8s 0.2s forwards; }
+  .hero-h1 { animation: fadeUp 0.9s 0.4s forwards; }
+  .hero-sub { animation: fadeUp 0.8s 0.6s forwards; }
+  .hero-btn { animation: fadeUp 0.8s 0.8s forwards; }
+  .stat-item { opacity: 0; animation: fadeUp 0.8s forwards; }
+  .stat-item:nth-child(1) { animation-delay: 0.5s; }
+  .stat-item:nth-child(2) { animation-delay: 0.7s; }
+  .stat-item:nth-child(3) { animation-delay: 0.9s; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursor-follower"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">
+    <span class="logo-job">JOB</span>
+    <span class="logo-company">Company</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#cases">Cases</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#contato" class="nav-cta">Fale conosco</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Assessoria em Marketing</span>
+    <h1 class="hero-h1">SUA MARCA<br><em>no centro</em><br>DO MERCADO</h1>
+    <p class="hero-sub">Estratégias de marketing sob medida para transformar sua presença digital em resultados reais e mensuráveis.</p>
+    <a href="#servicos" class="hero-btn">
+      Conheça nossos serviços
+      <span class="hero-btn-arrow">→</span>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div></div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">+120</div>
+        <div class="stat-label">Clientes atendidos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8×</div>
+        <div class="stat-label">Retorno médio sobre investimento</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">96%</div>
+        <div class="stat-label">Taxa de satisfação</div>
+      </div>
+    </div>
+    <span class="hero-scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Branding Estratégico <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Gestão de Redes Sociais <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Tráfego Pago <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Marketing de Conteúdo <span class="marquee-dot"></span></div>
+    <div class="marquee-item">SEO & Performance <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Identidade Visual <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Branding Estratégico <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Gestão de Redes Sociais <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Tráfego Pago <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Marketing de Conteúdo <span class="marquee-dot"></span></div>
+    <div class="marquee-item">SEO & Performance <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Identidade Visual <span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-left">
+    <span class="section-label reveal">Nossa essência</span>
+    <span class="sobre-num">01</span>
+  </div>
+  <div class="sobre-right">
+    <h2 class="sobre-h2 reveal">MARKETING QUE<br><em>entende você</em><br>E SEU NEGÓCIO</h2>
+    <p class="sobre-p reveal">Na Job Company, acreditamos que não existe fórmula pronta. Cada cliente tem uma história, um mercado e um potencial único — e é exatamente isso que exploramos.</p>
+    <p class="sobre-p reveal">Desenvolvemos assessorias de marketing 100% personalizadas, combinando análise de dados, criatividade e estratégia para construir marcas que geram conexão real com o público.</p>
+    <ul class="sobre-list reveal">
+      <li>Diagnóstico completo da sua presença digital</li>
+      <li>Estratégia exclusiva alinhada aos seus objetivos</li>
+      <li>Execução impecável com foco em resultado</li>
+      <li>Acompanhamento contínuo e relatórios claros</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SERVICOS -->
+<section class="servicos" id="servicos">
+  <div class="servicos-header reveal">
+    <h2 class="servicos-h2">NOSSOS<br>SERVIÇOS</h2>
+    <p class="servicos-sub">Soluções completas de marketing pensadas especificamente para o seu contexto</p>
+  </div>
+  <div class="servicos-grid">
+
+    <div class="servico-card reveal">
+      <div class="servico-num">01</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="17" stroke="currentColor" stroke-width="0.5"/>
+        <path d="M10 18 L18 10 L26 18 L18 26 Z" stroke="currentColor" stroke-width="0.5" fill="none"/>
+      </svg>
+      <div class="servico-title">BRANDING &amp; IDENTIDADE</div>
+      <p class="servico-desc">Construímos marcas com propósito. Do naming à identidade visual, criamos uma presença que fala diretamente com seu público-alvo e se destaca no mercado.</p>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">02</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="8" width="28" height="20" rx="1" stroke="currentColor" stroke-width="0.5"/>
+        <path d="M4 13 L32 13" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="18" cy="23" r="4" stroke="currentColor" stroke-width="0.5"/>
+      </svg>
+      <div class="servico-title">GESTÃO DE REDES SOCIAIS</div>
+      <p class="servico-desc">Gerenciamento estratégico das suas redes sociais com produção de conteúdo relevante, consistência de marca e engajamento genuíno com sua comunidade.</p>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">03</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 28 L13 18 L19 23 L26 12 L30 16" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="13" cy="18" r="2" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="26" cy="12" r="2" stroke="currentColor" stroke-width="0.5"/>
+      </svg>
+      <div class="servico-title">TRÁFEGO PAGO</div>
+      <p class="servico-desc">Campanhas de performance no Google Ads, Meta Ads e demais plataformas. Otimização contínua para maximizar seu retorno sobre investimento.</p>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">04</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 10 L28 10 M8 18 L22 18 M8 26 L25 26" stroke="currentColor" stroke-width="0.5" stroke-linecap="round"/>
+      </svg>
+      <div class="servico-title">MARKETING DE CONTEÚDO</div>
+      <p class="servico-desc">Estratégia editorial completa com blogs, vídeos, e-mails e materiais ricos que educam, engajam e convertem seu público em clientes fiéis.</p>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">05</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="12" r="4" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="26" r="3" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="28" cy="26" r="3" stroke="currentColor" stroke-width="0.5"/>
+        <path d="M18 16 L8 23 M18 16 L28 23" stroke="currentColor" stroke-width="0.5"/>
+      </svg>
+      <div class="servico-title">INFLUÊNCIA &amp; PARCERIAS</div>
+      <p class="servico-desc">Identificação e gestão de influenciadores e parcerias estratégicas alinhadas ao posicionamento da sua marca para ampliar seu alcance orgânico.</p>
+    </div>
+
+    <div class="servico-card reveal">
+      <div class="servico-num">06</div>
+      <svg class="servico-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 30 L6 20 L12 20 L12 30 M15 30 L15 14 L21 14 L21 30 M24 30 L24 8 L30 8 L30 30" stroke="currentColor" stroke-width="0.5"/>
+      </svg>
+      <div class="servico-title">ANALYTICS &amp; RELATÓRIOS</div>
+      <p class="servico-desc">Monitoramento em tempo real com dashboards personalizados, relatórios mensais detalhados e tomada de decisão orientada por dados concretos.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- METODOLOGIA -->
+<section class="metodologia">
+  <div class="met-header">
+    <span class="section-label reveal" style="color: var(--gray-mid);">Como trabalhamos</span>
+    <h2 class="met-h2 reveal">NOSSA METODOLOGIA</h2>
+  </div>
+  <div class="met-steps">
+    <div class="met-step reveal">
+      <div class="met-step-num">01</div>
+      <div class="met-step-title">DIAGNÓSTICO</div>
+      <p class="met-step-desc">Mapeamos profundamente seu negócio, mercado, concorrência e público para entender exatamente onde você está e onde pode chegar.</p>
+    </div>
+    <div class="met-step reveal">
+      <div class="met-step-num">02</div>
+      <div class="met-step-title">ESTRATÉGIA</div>
+      <p class="met-step-desc">Com base no diagnóstico, desenhamos um plano de ação personalizado com metas claras, canais prioritários e mensagens que convertem.</p>
+    </div>
+    <div class="met-step reveal">
+      <div class="met-step-num">03</div>
+      <div class="met-step-title">EXECUÇÃO</div>
+      <p class="met-step-desc">Implementamos cada etapa da estratégia com rigor e criatividade, garantindo consistência de marca em todos os pontos de contato.</p>
+    </div>
+    <div class="met-step reveal">
+      <div class="met-step-num">04</div>
+      <div class="met-step-title">EVOLUÇÃO</div>
+      <p class="met-step-desc">Analisamos resultados continuamente, otimizamos o que funciona e ajustamos o que precisa melhorar para crescimento sustentável.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="cases-header">
+    <span class="section-label reveal">Resultados reais</span>
+    <h2 class="servicos-h2 reveal" style="margin-top:1rem;">NOSSOS CASES</h2>
+  </div>
+  <div class="cases-grid">
+    <div class="case-item featured reveal">
+      <div class="case-cover">
+        <svg class="case-cover-pattern" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <pattern id="p1" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.4)"/>
+            </pattern>
+          </defs>
+          <rect width="600" height="400" fill="#1a1a1a"/>
+          <rect width="600" height="400" fill="url(#p1)"/>
+          <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="'Bebas Neue', sans-serif" font-size="96" fill="rgba(255,255,255,0.07)" letter-spacing="8">MARCA</text>
+        </svg>
+      </div>
+      <div class="case-tag">E-commerce · Branding · Tráfego Pago</div>
+      <div class="case-title">MODA PREMIUM<br>DIGITAL-FIRST</div>
+      <p class="case-desc">Reformulação completa de identidade e estratégia digital que resultou em 340% de crescimento em vendas online em 6 meses, com ROAS de 9,2×.</p>
+      <span class="case-arrow">→</span>
+    </div>
+    <div class="case-item reveal">
+      <div class="case-tag">B2B · LinkedIn · Conteúdo</div>
+      <div class="case-title">TECH B2B<br>AUTORIDADE</div>
+      <p class="case-desc">Construção de autoridade no LinkedIn com conteúdo estratégico que gerou 18 novos contratos em 90 dias.</p>
+      <span class="case-arrow">→</span>
+    </div>
+    <div class="case-item reveal">
+      <div class="case-tag">Gastronomia · Instagram · Local</div>
+      <div class="case-title">RESTAURANTE<br>GOURMET</div>
+      <p class="case-desc">Estratégia de redes sociais e tráfego local que aumentou o movimento em 220% e esgotou reservas semanais.</p>
+      <span class="case-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos">
+  <span class="section-label reveal">O que dizem sobre nós</span>
+  <div class="dep-grid">
+    <div class="dep-card reveal">
+      <p class="dep-quote">A Job Company não entrega só marketing — entrega transformação. Em 4 meses, nossa marca se tornou referência no segmento.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">CM</div>
+        <div>
+          <div class="dep-name">Carolina Mendes</div>
+          <div class="dep-role">CEO · Studio CM</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-card reveal">
+      <p class="dep-quote">Finalmente uma agência que entende o mercado B2B. Nossa geração de leads aumentou 5× em apenas um trimestre de trabalho.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">RF</div>
+        <div>
+          <div class="dep-name">Rafael Fonseca</div>
+          <div class="dep-role">Diretor Comercial · TechFlow</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-card reveal">
+      <p class="dep-quote">O nível de personalização é impressionante. Cada ação parece feita sob medida para a nossa realidade. Resultado real, sem enrolação.</p>
+      <div class="dep-author">
+        <div class="dep-avatar">LB</div>
+        <div>
+          <div class="dep-name">Luiza Borges</div>
+          <div class="dep-role">Fundadora · Bioma Botânica</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <div>
+    <h2 class="cta-h2 reveal">VAMOS<br>CONSTRUIR<br><em>algo grande</em><br>JUNTOS?</h2>
+  </div>
+  <div class="cta-right reveal">
+    <p class="cta-p">Preencha o formulário e nossa equipe entrará em contato em até 24 horas com uma proposta personalizada para o seu negócio.</p>
+    <div class="cta-form">
+      <input type="text" placeholder="Seu nome">
+      <input type="email" placeholder="Seu e-mail">
+      <input type="text" placeholder="Empresa">
+      <input type="text" placeholder="Qual seu principal desafio?">
+      <button class="cta-submit">Solicitar assessoria →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">
+      <span class="logo-job">JOB</span>
+      <span class="logo-company">Company</span>
+    </div>
+    <p class="footer-tagline">Assessoria em marketing personalizado para marcas que querem resultados reais.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Serviços</h4>
+    <ul>
+      <li><a href="#">Branding</a></li>
+      <li><a href="#">Redes Sociais</a></li>
+      <li><a href="#">Tráfego Pago</a></li>
+      <li><a href="#">Conteúdo</a></li>
+      <li><a href="#">Analytics</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Empresa</h4>
+    <ul>
+      <li><a href="#">Sobre nós</a></li>
+      <li><a href="#">Cases</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Carreiras</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contato</h4>
+    <ul>
+      <li><a href="#">contato@jobcompany.com.br</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">WhatsApp</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2025 Job Company. Todos os direitos reservados.</span>
+  <span class="footer-copy">Assessoria em Marketing Personalizado</span>
+</div>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursor-follower');
+  let mx = 0, my = 0, fx = 0, fy = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animFollower() {
+    fx += (mx - fx) * 0.12;
+    fy += (my - fy) * 0.12;
+    follower.style.left = fx + 'px';
+    follower.style.top = fy + 'px';
+    requestAnimationFrame(animFollower);
+  }
+  animFollower();
+
+  document.querySelectorAll('a, button, .servico-card, .case-item, .dep-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.05) + 's';
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
