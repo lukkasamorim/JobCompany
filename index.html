@@ -580,6 +580,317 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* ============================================
+     MOBILE RESPONSIVE — max-width: 768px
+  ============================================ */
+  @media (max-width: 768px) {
+
+    /* CURSOR — esconder no touch */
+    .cursor, .cursor-follower { display: none; }
+    body { cursor: auto; }
+    a, button { cursor: pointer; }
+
+    /* NAV */
+    nav { padding: 1rem 1.5rem; gap: 0; }
+    .logo-img { width: 110px; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+
+    /* MENU HAMBURGUER */
+    .nav-hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--black);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* MENU MOBILE OVERLAY */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--black);
+      z-index: 99;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 3rem; letter-spacing: 0.06em;
+      color: var(--white); text-decoration: none;
+      padding: 1rem 2rem;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+      width: 100%; text-align: center;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:active { color: var(--accent); }
+
+    /* HERO — centralizado e impactante */
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: 65px;
+    }
+    .hero-left {
+      padding: 3.5rem 1.8rem 3.5rem;
+      min-height: 85vh;
+      align-items: center;
+      text-align: center;
+    }
+    .hero-tag {
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .hero-tag::before { display: none; }
+    .hero-h1 {
+      font-size: clamp(3.2rem, 15vw, 5rem);
+      margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-size: 0.88rem;
+      max-width: 100%;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .hero-btn {
+      align-self: center;
+      justify-content: center;
+    }
+    .hero-right {
+      padding: 2.5rem 1.8rem 3rem;
+      min-height: auto;
+    }
+    .hero-stats { gap: 0; padding-top: 0; }
+    .stat-item {
+      padding: 1.4rem 0;
+      text-align: center;
+    }
+    .stat-num { font-size: 3rem; }
+    .stat-label { letter-spacing: 0.15em; }
+    .hero-scroll { display: none; }
+
+    /* MARQUEE */
+    .marquee-item { font-size: 0.58rem; gap: 2rem; }
+    .marquee-track { gap: 2rem; }
+
+    /* SOBRE — centralizado */
+    .sobre { grid-template-columns: 1fr; min-height: auto; }
+    .sobre-left { display: none; }
+    .sobre-right {
+      padding: 4rem 1.8rem;
+      text-align: center;
+      align-items: center;
+    }
+    .sobre-h2 {
+      font-size: clamp(2.2rem, 11vw, 3.2rem);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .sobre-p {
+      font-size: 0.92rem;
+      max-width: 100%;
+      text-align: center;
+    }
+    .section-label {
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .section-label::before { display: none; }
+    .sobre-list {
+      text-align: left;
+      align-self: stretch;
+      margin-top: 1.5rem;
+    }
+    .sobre-list li { font-size: 0.82rem; }
+
+    /* SERVIÇOS — centralizado */
+    .servicos { padding: 4rem 1.8rem; }
+    .servicos-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .servicos-h2 { text-align: center; }
+    .servicos-sub { text-align: center; max-width: 100%; }
+    .servicos-grid { grid-template-columns: 1fr; }
+    .servico-card {
+      border-right: none !important;
+      border-bottom: 0.5px solid var(--gray-light) !important;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+    }
+    .servico-card:last-child { border-bottom: none !important; }
+    .servico-num { margin-bottom: 1.2rem; }
+    .servico-icon { margin: 0 auto 1.2rem; }
+    .servico-title { font-size: 1.4rem; }
+    .servico-desc { font-size: 0.82rem; }
+
+    /* METODOLOGIA — centralizado */
+    .metodologia { padding: 4rem 1.8rem; }
+    .met-header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .met-header .section-label { justify-content: center; }
+    .met-header .section-label::before { display: none; }
+    .met-h2 { text-align: center; font-size: clamp(2rem, 10vw, 3rem); }
+    .met-steps {
+      grid-template-columns: 1fr;
+      border-top: none;
+    }
+    .met-step {
+      border-right: none !important;
+      border-top: 0.5px solid rgba(255,255,255,0.1);
+      padding: 2.2rem 0;
+      text-align: center;
+    }
+    .met-step:first-child { padding-left: 0; }
+    .met-step-num {
+      font-size: 3.5rem;
+      margin-bottom: 0.8rem;
+      color: rgba(255,255,255,0.12);
+    }
+    .met-step-title { font-size: 1.4rem; }
+    .met-step-desc { font-size: 0.82rem; }
+
+    /* CASES — centralizado */
+    .cases { padding: 4rem 1.8rem; }
+    .cases-header { text-align: center; }
+    .cases-header .section-label { justify-content: center; }
+    .cases-header .section-label::before { display: none; }
+    .cases-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 1px;
+    }
+    .case-item.featured { grid-row: auto; }
+    .case-item {
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+    }
+    .case-tag { text-align: center; }
+    .case-title { font-size: 1.6rem; }
+    .case-arrow { top: 1.5rem; right: 1.5rem; }
+    .case-desc { font-size: 0.82rem; }
+
+    /* DEPOIMENTOS — centralizado */
+    .depoimentos { padding: 4rem 1.8rem; text-align: center; }
+    .depoimentos .section-label { justify-content: center; }
+    .depoimentos .section-label::before { display: none; }
+    .dep-grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+    }
+    .dep-card { padding: 2rem 1.8rem; text-align: left; }
+    .dep-quote { font-size: 0.98rem; }
+
+    /* CTA — centralizado */
+    .cta-section {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 5rem 1.8rem;
+      text-align: center;
+    }
+    .cta-section::before { font-size: 55vw; right: -1rem; bottom: -1rem; opacity: 0.6; }
+    .cta-h2 {
+      font-size: clamp(2.8rem, 13vw, 4.5rem);
+      text-align: center;
+    }
+    .cta-right { align-items: center; }
+    .cta-p { text-align: center; font-size: 0.88rem; }
+    .cta-form { width: 100%; }
+    .cta-form input { text-align: left; }
+    .cta-submit {
+      align-self: stretch;
+      text-align: center;
+      width: 100%;
+      padding: 1.2rem;
+    }
+
+    /* FOOTER — centralizado */
+    footer {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 3.5rem 1.8rem;
+      text-align: center;
+    }
+    .footer-brand { display: flex; flex-direction: column; align-items: center; }
+    .footer-brand .logo-img { width: 170px; }
+    .footer-tagline { text-align: center; }
+    .footer-col { text-align: center; }
+    .footer-col ul { align-items: center; }
+    .footer-bottom {
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: center;
+      padding: 1.2rem 1.8rem;
+    }
+  }
+
+  /* TABLET — 769px a 1024px */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    nav { padding: 1.2rem 2rem; }
+    .nav-hamburger { display: none; }
+
+    .hero-left { padding: 7rem 2.5rem 4rem; }
+    .hero-right { padding: 4rem 2.5rem; }
+    .hero-h1 { font-size: clamp(3rem, 6vw, 5rem); }
+
+    .sobre { grid-template-columns: 1fr 1fr; }
+    .sobre-left { padding: 5rem 2.5rem; }
+    .sobre-right { padding: 5rem 3rem; }
+
+    .servicos { padding: 5rem 2.5rem; }
+    .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .servico-card:nth-child(3n) { border-right: 0.5px solid var(--gray-light); }
+    .servico-card:nth-child(2n) { border-right: none; }
+    .servico-card:nth-last-child(-n+2) { border-bottom: none; }
+    .servico-card:nth-last-child(n+3):nth-child(2n+1):last-child { border-bottom: none; }
+
+    .met-steps { grid-template-columns: repeat(2, 1fr); }
+    .met-step:nth-child(2) { border-right: none; }
+    .met-step:nth-child(3) { border-top: 0.5px solid rgba(255,255,255,0.1); border-right: 0.5px solid rgba(255,255,255,0.08); }
+    .met-step:nth-child(4) { border-top: 0.5px solid rgba(255,255,255,0.1); border-right: none; }
+    .metodologia { padding: 5rem 2.5rem; }
+
+    .cases { padding: 5rem 2.5rem; }
+    .cases-grid { grid-template-columns: 1fr 1fr; }
+
+    .dep-grid { grid-template-columns: 1fr 1fr; }
+    .dep-grid .dep-card:last-child { grid-column: 1 / -1; }
+    .depoimentos { padding: 5rem 2.5rem; }
+
+    .cta-section { padding: 7rem 2.5rem; gap: 4rem; }
+
+    footer { grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; padding: 3rem 2.5rem; }
+    .footer-col:last-child { grid-column: 1 / -1; }
+    .footer-bottom { padding: 1.2rem 2.5rem; }
+  }
+
+  /* Esconder hamburger no desktop */
+  @media (min-width: 769px) {
+    .nav-hamburger { display: none; }
+    .mobile-menu { display: none !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -599,7 +910,19 @@
     <li><a href="#contato">Contato</a></li>
   </ul>
   <a href="#contato" class="nav-cta">Fale conosco</a>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#sobre" onclick="closeMenu()">Sobre</a>
+  <a href="#servicos" onclick="closeMenu()">Serviços</a>
+  <a href="#cases" onclick="closeMenu()">Cases</a>
+  <a href="#contato" onclick="closeMenu()">Contato</a>
+  <a href="#contato" onclick="closeMenu()" style="font-size:1.2rem; letter-spacing:0.2em; margin-top:1rem; color: var(--accent);">Fale conosco →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -913,20 +1236,25 @@
   const follower = document.getElementById('cursor-follower');
   let mx = 0, my = 0, fx = 0, fy = 0;
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
-  });
-
-  function animFollower() {
-    fx += (mx - fx) * 0.12;
-    fy += (my - fy) * 0.12;
-    follower.style.left = fx + 'px';
-    follower.style.top = fy + 'px';
-    requestAnimationFrame(animFollower);
+  const isTouchDevice = window.matchMedia('(hover: none)').matches;
+  if (!isTouchDevice) {
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    function animFollower() {
+      fx += (mx - fx) * 0.12;
+      fy += (my - fy) * 0.12;
+      follower.style.left = fx + 'px';
+      follower.style.top = fy + 'px';
+      requestAnimationFrame(animFollower);
+    }
+    animFollower();
+  } else {
+    cursor.style.display = 'none';
+    follower.style.display = 'none';
   }
-  animFollower();
 
   document.querySelectorAll('a, button, .servico-card, .case-item, .dep-card').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -934,6 +1262,20 @@
   });
 
 
+
+  // HAMBURGER MENU
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const ham = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    ham.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 
   const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
